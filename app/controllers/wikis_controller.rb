@@ -37,4 +37,15 @@ class WikisController < ApplicationController
       render :edit
     end
   end
+
+  def destroy
+    @wiki = Wiki.find(params[:id])
+    if @wiki.destroy
+      flash[:notice] = "Post was deleted."
+      redirect_to wikis_path
+    else
+      flash[:error] = "There was an error deleting the post. Please try again."
+      render :show
+    end
+  end
 end
