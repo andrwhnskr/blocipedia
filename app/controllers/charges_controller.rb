@@ -18,6 +18,9 @@ class ChargesController < ApplicationController
      email: current_user.email,
      card: params[:stripeToken]
    )
+
+  current_user.update_attribute(:role, 'premium')
+  current_user.save!
  
    # Where the real magic happens
    charge = Stripe::Charge.create(
@@ -27,9 +30,9 @@ class ChargesController < ApplicationController
      currency: 'usd'
    )
 
-    # if current_user.update(premium: true)
-    #   flash[:success] = "Thanks for all the money, #{current_user.email}! Feel free to pay me again."
-    #   redirect_to edit_user_registration_path
+    # if current_user.update(role: 'premium')
+  flash[:success] = "Thanks for all the money, #{current_user.email}! Feel free to pay me again."
+  redirect_to root_path
     # else
     #   flash[:error] = "There was an error upgrading your account. Please contact support!"
     #   redirect_to edit_user_registration_path 
@@ -39,6 +42,6 @@ class ChargesController < ApplicationController
  # This `rescue block` catches and displays those errors.
  rescue Stripe::CardError => e
    flash[:error] = e.message
-   redirect_to root_path
+   redirect_to new_charge_path
  end
 end
