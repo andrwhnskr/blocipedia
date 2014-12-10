@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
-  after_initialize :init
+  after_initialize :init, :if => :new_record?
 
   def admin?
     role == 'admin'
@@ -15,6 +15,6 @@ class User < ActiveRecord::Base
   end
   
   def init
-    self.role = 'standard'
+    self.role ||= 'standard'
   end
 end
