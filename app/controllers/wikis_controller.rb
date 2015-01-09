@@ -1,4 +1,6 @@
 class WikisController < ApplicationController
+
+
   def index
     @wikis = policy_scope(Wiki)
       authorize @wikis
@@ -16,6 +18,15 @@ class WikisController < ApplicationController
 
   def create
     @wiki = Wiki.new(params.require(:wiki).permit(:title, :body))
+    # will create a wiki belonging to the user(entry in user_wikis table automatically done)
+    # current_user.wikis.create 
+
+    # will add another conntected user (collaborator) to a current wiki (user_wikis table automatically updated)
+    # Wiki.first.users << new_user_to_add
+
+    # removing
+    # Wiki.first.users.delete user_to_delete
+
       authorize @wiki
     if @wiki.save
       flash[:notice] = "Post was saved."

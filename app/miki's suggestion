@@ -1,0 +1,4 @@
+form_tag("collaborators/", method: "post") do
+  hidden_field_tag :wiki_id, wiki.id  
+  text_field_tag :email
+  submit_tag :save 

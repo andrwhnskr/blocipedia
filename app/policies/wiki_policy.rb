@@ -3,12 +3,8 @@ class WikiPolicy < ApplicationPolicy
     attr_reader :user, :scope
 
     def resolve
-      if user
-        if user.role == 'premium'
-          scope.all
-        else
-          scope.where(private: false)
-        end
+      if user.present? && user.role == 'premium'
+        scope.all
       else
         scope.where(private: false)
       end

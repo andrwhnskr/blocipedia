@@ -2,4 +2,10 @@
 
 <%= render 'form' %>
 
+<%= form_tag 'collaborators', method: :post  do %>
+    <%= hidden_field_tag :wiki_id, 'wiki.id'  %>
+    <%= text_field_tag :email, 'Enter collaborators'%>
+    <%= submit_tag :save %>
+<% end %>
+
 <%= link_to 'Back', wikis_path %>

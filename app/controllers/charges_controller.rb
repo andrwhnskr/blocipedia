@@ -44,4 +44,9 @@ class ChargesController < ApplicationController
    flash[:error] = e.message
    redirect_to new_charge_path
  end
+
+  def destroy_premium
+    current_user.update_attribute(:role, 'standard')
+    current_user.save!    
+  end
 end

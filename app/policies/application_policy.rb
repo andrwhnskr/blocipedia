@@ -1,3 +1,4 @@
+
 class ApplicationPolicy
   attr_reader :user, :record
 
@@ -23,7 +24,7 @@ class ApplicationPolicy
   end
 
   def update?
-    user.present?
+    user.present? && (record.user == user || user.role?(:admin, :premium))
   end
 
   def edit?
